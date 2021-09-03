@@ -18,18 +18,25 @@ export default {
         ],
     },
 
+    styleResources: {
+        scss: '~/assets/scss/shared/*.scss',
+    },
+
     css: [
         '~/assets/scss/main.scss'
     ],
 
-    styleResources: {
-        scss: '~/assets/scss/shared/*.scss',
+
+    router: {
+        // linkActiveClass: 'active-link',
+        linkExactActiveClass: 'active-link',
     },
 
     plugins: [],
 
     modules: [
         '@nuxtjs/axios',
+        '@nuxtjs/style-resources',
     ],
 
     axios: {},

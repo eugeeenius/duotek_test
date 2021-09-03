@@ -1,5 +1,10 @@
-@import "./shared/mixins";
-@import "./shared/text";
-@import "./shared/variables";
-@import './common/reset';
-@import './common/fonts';
+@import "common/text";
+@import "./common/reset";
+@import "./common/fonts";
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 36px;
+}

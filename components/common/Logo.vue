@@ -29,36 +29,36 @@
 </template>
 
 <script>
-export default {
-    name: 'Logo',
+    export default {
+        name: 'Logo',
 
-    props: {
-        inverse: {
-            type: Boolean,
-            default: false,
+        props: {
+            inverse: {
+                type: Boolean,
+                default: false,
+            },
         },
-    },
-}
+    }
 </script>
 
 <style lang="scss" module>
-.Logo {
-    path {
-        fill: #030953;
-
-        &:last-child {
-            fill: white;
-        }
-    }
-
-    &._inverse {
+    .Logo {
         path {
-            fill: #fff;
+            fill: #030953;
 
             &:last-child {
-                fill: #030953;
+                fill: white;
+            }
+        }
+
+        &._inverse {
+            path {
+                fill: #fff;
+
+                &:last-child {
+                    fill: #030953;
+                }
             }
         }
     }
-}
 </style>
