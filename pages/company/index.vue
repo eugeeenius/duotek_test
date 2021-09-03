@@ -1,17 +1,19 @@
 <template>
-    <div :class="$style.CompaniesPage">CompaniesPage</div>
+    <section :class="$style.CompaniesPage">
+        <h1 class="title">Каталог компаний</h1>
+    </section>
 </template>
 
 <script>
-// Components
+    // Components
 
-export default {
-    name: 'CompaniesPage',
-}
+    export default {
+        name: 'CompaniesPage',
+    }
 </script>
 
 <style lang="scss" module>
-.CompaniesPage {
-    //
-}
+    .CompaniesPage {
+        padding: 75px 0 44px;
+    }
 </style>

@@ -1,9 +1,0 @@
-@mixin font($alias, $name, $weight) {
-    @font-face {
-        font-family: $alias;
-        src: url("~assets/fonts/" + $name + ".ttf") format("ttf");
-        font-weight: $weight;
-        font-style: normal;
-        font-display: swap;
-    }
-}
