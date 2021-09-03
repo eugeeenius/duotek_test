@@ -1,7 +1,10 @@
 <template>
-  Home
+    <h1>Home page</h1>
 </template>
 
 <script>
-export default {}
+import Logo from '../components/common/Logo'
+export default {
+    components: { Logo }
+}
 </script>
