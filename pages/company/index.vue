@@ -25,6 +25,7 @@
 
 <style lang="scss" module>
     .CompaniesPage {
+        position: relative;
         padding: 75px 0 44px;
     }
 </style>

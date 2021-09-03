@@ -73,7 +73,7 @@
 <style lang="scss" module>
     .Header {
         height: 96px;
-        border-bottom: 1px solid $gray-border;
+        border-bottom: 1px solid #f2f2f2;
 
         &._inverse {
             border-bottom: none;

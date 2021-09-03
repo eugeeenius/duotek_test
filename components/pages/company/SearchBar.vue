@@ -65,7 +65,7 @@
         width: 665px;
         height: 100%;
         padding-left: 12px;
-        border: 1px solid $gray-border;
+        border: 1px solid $gray-l;
         border-radius: 4px 0 0 4px;
         background-color: #fff;
 

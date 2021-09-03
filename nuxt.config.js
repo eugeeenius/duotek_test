@@ -1,3 +1,5 @@
+const path = require('path');
+
 export default {
     head: {
         title: 'duotek_test',
@@ -28,11 +30,13 @@ export default {
 
 
     router: {
-        // linkActiveClass: 'active-link',
         linkExactActiveClass: 'active-link',
     },
 
-    plugins: [],
+    plugins: [
+        '~plugins/axios',
+        '~plugins/api',
+    ],
 
     modules: [
         '@nuxtjs/axios',
