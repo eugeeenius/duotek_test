@@ -95,7 +95,16 @@
         padding: 5px 20px;
     }
 
+    .link,
+    .login {
+
+        &:hover {
+            opacity: 0.3;
+        }
+    }
+
     :global {
+
         .active-link {
             opacity: 0.3;
         }
