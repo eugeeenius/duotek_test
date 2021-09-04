@@ -27,7 +27,12 @@
                 :allow-empty="false"
                 :show-labels="false"
                 @select="$emit('change', {specialization: $event})"
-            />
+            >
+                <template slot="singleLabel"
+                          slot-scope="props">
+                        <span :title="props.option.title">{{ titleFormatter(props.option.title) }}</span>
+                </template>
+            </Multiselect>
         </div>
     </div>
 </template>
@@ -51,6 +56,28 @@
             values: {
                 type: Object,
                 default: () => ({}),
+            },
+        },
+
+        data() {
+            return {
+                collapseLength: 20,
+            };
+        },
+
+        computed: {
+            name() {
+                return this.data;
+            },
+        },
+
+        methods: {
+            titleFormatter(title) {
+                if (title.length < this.collapseLength) {
+                    return title;
+                }
+
+                return title.slice(0, this.collapseLength) + '...';
             },
         },
     };
@@ -79,6 +106,8 @@
     }
 
     :global(.multiselect) {
+        color: #1c1c1e;
+
         * {
             font-size: 14px;
             line-height: 21px;
@@ -118,7 +147,11 @@
 
             min-height: unset;
             padding: 10px 16px;
-            font-size: 12px;
+
+            span {
+                font-size: 12px;
+                line-height: 1;
+            }
 
             &--highlight {
                 background-color: #fff;
@@ -128,11 +161,12 @@
 
             &--selected {
                 background-color: $gray-bg;
-                transition: background-color $color-transition;
+                color: $black;
+                transition: color, background-color $color-transition;
 
                 &#{$option}--highlight {
                     background-color: $gray-bg;
-                    color: $black;
+                    color: $link;
                 }
             }
         }
