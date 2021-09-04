@@ -51,6 +51,7 @@
     .CompanyCard {
         position: relative;
         width: 100%;
+        height: 200px;
         padding: 45px 75px 35px 193px;
         border-radius: 8px;
         background-color: #fff;

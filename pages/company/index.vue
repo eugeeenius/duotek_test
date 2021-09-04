@@ -11,9 +11,25 @@
             @change="onFilterChange"
         />
 
-        <section :class="$style.list">
-            <CompanyCard :data="companies[0]" />
+        <section :class="[$style.list, {[$style._reloading]: isReloading}]">
+            <CompanyCard
+                v-for="company in companies"
+                :key="company.title + company.created_at"
+                :data="company"
+                @click.native="$router.push('/company/' + company.id)"
+            />
         </section>
+
+        <ul :class="$style.pagination">
+            <li
+                v-for="index in pageInfo.meta.last_page"
+                :key="index"
+                :class="[$style.paginationItem, {[$style._active]: pageInfo.meta.current_page === index}]"
+                @click="onPaginationClick(index)"
+            >
+                {{ index }}
+            </li>
+        </ul>
     </section>
 </template>
 
@@ -37,7 +53,6 @@
                 const [
                     definitionsRes,
                     companiesRes,
-                    // infoRes,
                 ] = await Promise.all([
                     $axios.$get($api.definitions),
                     $axios.$get($api.companies.list, {
@@ -46,7 +61,6 @@
                             page: 1,
                         },
                     }),
-                    // $axios.$get($api.info),
                 ]);
 
                 const specs = {
@@ -83,6 +97,7 @@
                 specs: {},
                 companies: [],
                 pageInfo: {},
+                isReloading: false,
             };
         },
 
@@ -92,6 +107,34 @@
             },
             onFilterChange(val) {
                 this.values = {...this.values, ...val};
+            },
+            async onPaginationClick(pageNumber) {
+                this.isReloading = true;
+
+                try {
+                    const res = await this.$axios.$get(this.$api.companies.list, {
+                        params: {
+                            per_page: 10,
+                            page: pageNumber,
+                        }
+                    });
+
+                    const {data, links, meta} = res;
+
+                    this.companies = data;
+                    this.pageInfo = {
+                        links,
+                        meta,
+                    };
+                } catch(e) {
+                    console.warn('[CompaniesPage] onPaginationClick: ', e);
+                }
+
+                window.scrollTo(0, 0);
+
+                setTimeout(() => {
+                    this.isReloading = false;
+                }, 400);
             },
         },
     }
@@ -112,5 +155,40 @@
     .list {
         width: 792px;
         padding: 78px 0;
+        opacity: 1;
+        transition: opacity .4s ease;
+
+        &._reloading {
+            opacity: 0;
+        }
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .paginationItem {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+        background-color: transparent;
+        font-size: 16px;
+        color: $main-blue;
+        transition: color, background-color $color-transition;
+        cursor: pointer;
+
+        &:not(:first-child) {
+            margin-left: 4px;
+        }
+
+        &._active {
+            background-color: $gray-bg;
+            color: $gray;
+        }
     }
 </style>
