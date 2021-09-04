@@ -34,8 +34,8 @@ export default {
     },
 
     plugins: [
-        '~plugins/axios',
         '~plugins/api',
+        '~plugins/axios',
     ],
 
     modules: [

@@ -151,6 +151,7 @@
             span {
                 font-size: 12px;
                 line-height: 1;
+                transition: color $text-transition;
             }
 
             &--highlight {

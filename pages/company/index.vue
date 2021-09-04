@@ -10,6 +10,10 @@
             :specs="specs"
             @change="onFilterChange"
         />
+
+        <section :class="$style.list">
+            <CompanyCard :data="companies[0]" />
+        </section>
     </section>
 </template>
 
@@ -17,28 +21,33 @@
     // Components
     import SearchBar from '../../components/pages/company/SearchBar';
     import CompaniesFilter from '../../components/pages/company/CompaniesFilter';
+    import CompanyCard from '../../components/pages/company/CompanyCard';
 
     export default {
         name: 'CompaniesPage',
 
         components: {
+            CompanyCard,
             CompaniesFilter,
             SearchBar,
         },
 
         async asyncData({$axios, $api}) {
             try {
-                // const [
-                //     definitionsRes,
-                //     companiesRes,
-                //     infoRes,
-                // ] = await Promise.all([
-                //     $axios.$get($api.definitions),
-                //     $axios.$get($api.companies),
-                //     $axios.$get($api.info),
-                // ]);
-
-                const definitionsRes = await $axios.$get($api.definitions);
+                const [
+                    definitionsRes,
+                    companiesRes,
+                    // infoRes,
+                ] = await Promise.all([
+                    $axios.$get($api.definitions),
+                    $axios.$get($api.companies.list, {
+                        params: {
+                            per_page: 10,
+                            page: 1,
+                        },
+                    }),
+                    // $axios.$get($api.info),
+                ]);
 
                 const specs = {
                     industry: definitionsRes.Industry,
@@ -50,10 +59,17 @@
                     specialization: specs.specialization[0],
                 };
 
+                const {links, meta} = companiesRes;
+
                 return {
                     definitions: definitionsRes,
                     values: defaultValues,
                     specs: specs,
+                    companies: companiesRes.data,
+                    pageInfo: {
+                        links,
+                        meta,
+                    },
                 };
             } catch(e) {
                 console.warn('[CompaniesPage] asyncData: ', e);
@@ -65,6 +81,8 @@
                 definitions: {},
                 values: {},
                 specs: {},
+                companies: [],
+                pageInfo: {},
             };
         },
 
@@ -89,5 +107,10 @@
         position: absolute;
         top: 65px;
         right: 0;
+    }
+
+    .list {
+        width: 792px;
+        padding: 78px 0;
     }
 </style>
