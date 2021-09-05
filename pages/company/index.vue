@@ -5,6 +5,7 @@
         <SearchBar @on-search="handleSearch"/>
 
         <CompaniesFilter
+            v-if="specs.industries"
             :class="$style.filter"
             :values="values"
             :specs="specs"
@@ -20,7 +21,8 @@
             />
         </section>
 
-        <ul :class="$style.pagination">
+        <ul v-if="pageInfo.meta"
+            :class="$style.pagination">
             <li
                 v-for="index in pageInfo.meta.last_page"
                 :key="index"
@@ -48,7 +50,7 @@
             SearchBar,
         },
 
-        async asyncData({$axios, $api}) {
+        async asyncData({$axios, $api, route}) {
             try {
                 const [
                     definitionsRes,
@@ -63,17 +65,25 @@
                     }),
                 ]);
 
-                const specs = {
-                    industry: definitionsRes.Industry,
-                    specialization: definitionsRes.CompanySpecialization,
+                const defaultValues = {
+                    industries: {
+                        id: null,
+                        title: 'Все отрасли'
+                    },
+                    specializations: {
+                        id: null,
+                        title: 'Все специализации'
+                    },
                 };
 
-                const defaultValues = {
-                    industry: specs.industry[0],
-                    specialization: specs.specialization[0],
+                const specs = {
+                    industries: [defaultValues.industries, ...definitionsRes.Industry],
+                    specializations: [defaultValues.specializations, ...definitionsRes.CompanySpecialization],
                 };
 
                 const {links, meta} = companiesRes;
+
+                const query = Object.keys(route.query).length ? route.query : null;
 
                 return {
                     definitions: definitionsRes,
@@ -84,6 +94,7 @@
                         links,
                         meta,
                     },
+                    initialQuery: query,
                 };
             } catch(e) {
                 console.warn('[CompaniesPage] asyncData: ', e);
@@ -98,16 +109,60 @@
                 companies: [],
                 pageInfo: {},
                 isReloading: false,
+                search: '',
+                initialQuery: null,
             };
+        },
+
+        computed: {
+            queryObj() {
+                const params = {
+                    specializations: this.values.specializations?.id,
+                    industries: this.values.industries?.id,
+                    search: this.search
+                }
+
+                Object.keys(params).forEach(key => {
+                    if (!params[key]) {
+                        delete params[key];
+                    }
+                });
+
+                return params;
+            },
+
+            isQueryEmpty() {
+                return !Object.keys(this.queryObj).length;
+            },
+        },
+
+        created() {
+            if (!this.initialQuery) return;
+
+            Object.keys(this.initialQuery).forEach(key => {
+                if (key === 'search') {
+                    this.search = this.initialQuery[key];
+                }
+                if ((key === 'industries' || key === 'specializations') && Number(this.initialQuery[key])) {
+                    const id = Number(this.initialQuery[key]);
+                    this.values[key] = this.specs[key].find(el => el.id === id);
+                }
+            });
+
+            this.filterCompanies();
         },
 
         methods: {
             handleSearch(val) {
-                console.log(val);
+                this.search= val
+                this.changeQuery();
             },
+
             onFilterChange(val) {
                 this.values = {...this.values, ...val};
+                this.changeQuery();
             },
+
             async onPaginationClick(pageNumber) {
                 this.isReloading = true;
 
@@ -139,6 +194,20 @@
                 setTimeout(() => {
                     this.isReloading = false;
                 }, 400);
+            },
+
+            changeQuery() {
+                this.$router.push({
+                    path: '/company',
+                    query: this.queryObj,
+                });
+
+                this.filterCompanies();
+            },
+
+            filterCompanies() {
+                if (this.isQueryEmpty) return;
+                console.log('filterCompanies');
             },
         },
     }

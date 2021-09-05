@@ -4,14 +4,14 @@
             <div :class="$style.name">Отрасль</div>
 
             <Multiselect
-                :value="values.industry"
+                :value="values.industries"
                 :searchable="false"
-                :options="specs.industry"
+                :options="specs.industries"
                 trackBy="id"
                 label="title"
                 :allow-empty="false"
                 :show-labels="false"
-                @select="$emit('change', {industry: $event})"
+                @select="$emit('change', {industries: $event})"
             />
         </div>
 
@@ -19,14 +19,14 @@
             <div :class="$style.name">Специализация</div>
 
             <Multiselect
-                :value="values.specialization"
+                :value="values.specializations"
                 :searchable="false"
-                :options="specs.specialization"
+                :options="specs.specializations"
                 trackBy="id"
                 label="title"
                 :allow-empty="false"
                 :show-labels="false"
-                @select="$emit('change', {specialization: $event})"
+                @select="$emit('change', {specializations: $event})"
             >
                 <template slot="singleLabel"
                           slot-scope="props">

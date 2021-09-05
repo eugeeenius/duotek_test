@@ -15,7 +15,7 @@
         </div>
 
         <div :class="$style.btn"
-             @click="onSearchClick">
+             @click.stop="onSearchClick">
             Найти
         </div>
     </div>
@@ -45,7 +45,7 @@
 
         methods: {
             onSearchClick() {
-                if (this.$refs.input) return;
+                if (!this.$refs.input) return;
                 this.$refs.input.blur();
                 this.$emit('on-search', this.text.trim());
             },
@@ -93,5 +93,6 @@
         background-color: $main-blue;
         color: #fff;
         cursor: pointer;
+        user-select: none;
     }
 </style>

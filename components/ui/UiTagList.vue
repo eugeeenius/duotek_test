@@ -3,6 +3,7 @@
         <UiTag
             v-for="(tag, index) in tags"
             :key="tag.title + index"
+            :class="$style.tag"
             :title="tag.title"
             :inverse="inverse"
         />

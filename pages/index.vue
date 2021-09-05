@@ -1,10 +1,11 @@
 <template>
-    <h1>Home page</h1>
+    <div :class="$style.page">
+        <h1>Home page</h1>
+    </div>
 </template>
 
-<script>
-import Logo from '../components/common/Logo'
-export default {
-    components: { Logo }
-}
-</script>
+<style module>
+    .page {
+        min-height: 60vh;
+    }
+</style>

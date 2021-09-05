@@ -3,13 +3,13 @@
 </template>
 
 <script>
-export default {
-    name: 'CompaniesPage',
-}
+    export default {
+        name: 'CompaniesPage',
+    }
 </script>
 
 <style lang="scss" module>
-.EmptyPage {
-    //
-}
+    .EmptyPage {
+        min-height: 80vh;
+    }
 </style>
