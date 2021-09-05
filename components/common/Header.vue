@@ -1,5 +1,6 @@
 <template>
-    <header :class="[$style.Header, {[$style._inverse]: inverse}]">
+    <header id="header"
+            :class="[$style.Header, {[$style._inverse]: inverse}]">
         <div class="container"
              :class="$style.content">
             <a href="/">

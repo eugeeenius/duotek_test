@@ -2,7 +2,7 @@
     <section :class="$style.CompaniesPage">
         <h1 class="title">Каталог компаний</h1>
 
-        <SearchBar @on-search="handleSearch" />
+        <SearchBar @on-search="handleSearch"/>
 
         <CompaniesFilter
             :class="$style.filter"
@@ -111,6 +111,12 @@
             async onPaginationClick(pageNumber) {
                 this.isReloading = true;
 
+                const header = document.getElementById('header');
+                if (!header) return;
+                header.scrollIntoView({
+                    behavior: 'smooth',
+                })
+
                 try {
                     const res = await this.$axios.$get(this.$api.companies.list, {
                         params: {
@@ -129,8 +135,6 @@
                 } catch(e) {
                     console.warn('[CompaniesPage] onPaginationClick: ', e);
                 }
-
-                window.scrollTo(0, 0);
 
                 setTimeout(() => {
                     this.isReloading = false;
@@ -156,7 +160,7 @@
         width: 792px;
         padding: 78px 0;
         opacity: 1;
-        transition: opacity .4s ease;
+        transition: opacity .6s ease;
 
         &._reloading {
             opacity: 0;
