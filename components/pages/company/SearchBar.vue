@@ -1,18 +1,24 @@
 <template>
     <div :class="$style.SearchBar">
-        <div :class="$style.input">
-            <IconSearch/>
+        <div :class="$style.wrap">
+            <div :class="[$style.input, {[$style._invalid]: !isInputValid}]">
+                <IconSearch/>
 
-            <input
-                v-model="text"
-                ref="input"
-                type="text"
-                :placeholder="placeholder"
-                @keydown.enter="onSearchClick"
-                @focus="isInputFocused = true"
-                @blur="isInputFocused = false"
-            >
+                <input
+                    v-model="text"
+                    ref="input"
+                    type="text"
+                    :placeholder="placeholder"
+                    @keydown.enter="onSearchClick"
+                    @focus="isInputFocused = true"
+                    @blur="isInputFocused = false"
+                >
+            </div>
+
+            <div v-if="!isInputValid"
+                :class="$style.error">Название компании должно быть более 2 символов</div>
         </div>
+
 
         <div :class="$style.btn"
              @click.stop="onSearchClick">
@@ -30,9 +36,16 @@
 
         components: {IconSearch},
 
+        props: {
+            value: {
+                type: String,
+                default: '',
+            },
+        },
+
         data() {
             return {
-                text: '',
+                text: this.value,
                 isInputFocused: false,
             };
         },
@@ -41,13 +54,21 @@
             placeholder() {
                 return this.text || this.isInputFocused ? '' : 'Поиск продукта или отрасли';
             },
+
+            isInputValid() {
+                return this.text.length > 2 || this.text.length === 0;
+            }
         },
 
         methods: {
             onSearchClick() {
                 if (!this.$refs.input) return;
                 this.$refs.input.blur();
-                this.$emit('on-search', this.text.trim());
+
+                const text = this.text.trim().toLowerCase()
+
+                if (!this.isInputValid) return;
+                this.$emit('on-search', text);
             },
         },
     };
@@ -82,6 +103,10 @@
                 color: $gray;
             }
         }
+
+        &._invalid {
+            border: 1px solid $red;
+        }
     }
 
     .btn {
@@ -94,5 +119,10 @@
         color: #fff;
         cursor: pointer;
         user-select: none;
+    }
+
+    .error {
+        margin-top: 10px;
+        color: $red;
     }
 </style>
