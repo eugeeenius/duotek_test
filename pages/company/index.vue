@@ -41,7 +41,7 @@
                 v-for="index in pageInfo.meta.last_page"
                 :key="index"
                 :class="[$style.paginationItem, {[$style._active]: pageInfo.meta.current_page === index}]"
-                @click="fetchCompanies({page: index})"
+                @click="onPaginationClick(index)"
             >
                 {{ index }}
             </li>
@@ -103,7 +103,7 @@
                     industry: specs.industry.find(el => el.id === Number(params.industry)) ?? emptySpecs.industry,
                     specialization: specs.specialization.find(el => el.id === Number(params.specialization)) ?? emptySpecs.specialization,
                     search: params.search || '',
-                    page: 1,
+                    page: params.page || 1,
                 };
 
                 const {links, meta} = companiesRes;
@@ -130,6 +130,7 @@
                     industry: null,
                     category: null,
                     search: '',
+                    page: 1
                 },
                 specs: {
                     industry: [],
@@ -147,7 +148,7 @@
                     specialization: this.values.specialization?.id,
                     industry: this.values.industry?.id,
                     search: this.values.search,
-                    page: this.pageInfo.meta?.current_page ?? 1,
+                    page: this.values.page,
                 }
 
                 Object.keys(params).forEach(key => {
@@ -161,7 +162,7 @@
         },
 
         created() {
-            this.$router.push('/company?page=1');
+            this.changeQuery();
         },
 
         methods: {
@@ -175,24 +176,25 @@
                 this.changeQuery();
             },
 
-            async fetchCompanies(pageNumber = 1) {
-                this.isReloading = true;
+            onPaginationClick(val) {
+                this.values.page = val;
+                this.changeQuery();
+            },
 
+            async fetchCompanies() {
+                this.isReloading = true;
                 window.scrollTo(0, 0);
 
                 try {
                     const res = await this.$axios.$get(this.$api.companies.list, {
                         params: {
                             per_page: 10,
-                            page: pageNumber,
                             ...this.queryObj,
                         }
                     });
 
                     const {data, links, meta} = res;
-
                     this.companies = data;
-
                     this.pageInfo = {
                         links,
                         meta,
