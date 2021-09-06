@@ -1,42 +1,49 @@
 <template>
     <section :class="$style.InfoPage">
-        <div :class="$style.backlink">
+        <div :class="$style.backlink"
+             @click="$router.push('/company')">
             <div :class="$style.arrow">
                 <IconArrow />
             </div>
             Компании
         </div>
 
-        <h1 class="title">{{ company.title }}</h1>
+        <aside :class="$style.aside">
+            <InfoAside :info="company" />
+        </aside>
 
-        <ul :class="$style.numbers">
-            <li :class="$style.numbersItem">
-                {{ company.age }}<sup>{{ agePlural }}</sup>
-            </li>
+        <div :class="$style.content">
+            <h1 class="title">{{ company.title }}</h1>
 
-            <li :class="$style.numbersItem">
-                {{ company.staff }}<sup>человек</sup>
-            </li>
-        </ul>
+            <ul :class="$style.numbers">
+                <li :class="$style.numbersItem">
+                    {{ company.age }}<sup>{{ agePlural }}</sup>
+                </li>
 
-        <p :class="$style.shortDescr"
-            v-html="company.description_short"></p>
+                <li :class="$style.numbersItem">
+                    {{ company.staff }}<sup>человек</sup>
+                </li>
+            </ul>
 
-        <p :class="$style.fullDescr"
-            v-html="company.description_full"></p>
+            <p :class="$style.shortDescr"
+               v-html="company.description_short"></p>
 
-        <div v-if="company.companySpecializations.length"
-            :class="$style.features">
-            <h4>Проектная специализация</h4>
+            <p :class="$style.fullDescr"
+               v-html="company.description_full"></p>
 
-            <UiTagList :tags="company.companySpecializations" />
-        </div>
+            <div v-if="company.companySpecializations.length"
+                 :class="$style.features">
+                <h4>Проектная специализация</h4>
 
-        <div v-if="company.industries.length"
-            :class="$style.features">
-            <h4>Технологии</h4>
+                <UiTagList :tags="company.companySpecializations" />
+            </div>
 
-            <UiTagList :tags="company.industries" />
+            <div v-if="company.industries.length"
+                 :class="$style.features">
+                <h4>Технологии</h4>
+
+                <UiTagList :tags="company.industries" />
+            </div>
         </div>
     </section>
 </template>
@@ -47,11 +54,17 @@
     // Components
     import IconArrow from '../../../components/common/icons/IconArrow';
     import UiTagList from '../../../components/ui/UiTagList';
+    import InfoAside from '../../../components/pages/info/InfoAside';
 
     export default {
         name: 'InfoPage',
 
-        components: {UiTagList, IconArrow},
+        components: {InfoAside, UiTagList, IconArrow},
+
+        transitions: {
+            name: 'fade',
+            appear: true,
+        },
 
         async asyncData({$axios, $api, query, store, redirect}) {
             try {
@@ -89,14 +102,16 @@
             },
         },
 
-        beforeRouteLeave() {
+        beforeRouteLeave(to, from, next) {
             this.$store.dispatch('setDarkTheme', false);
+            next();
         },
     }
 </script>
 
 <style lang="scss" module>
     .InfoPage {
+        position: relative;
         min-height: calc(100vh - 96px);
         padding: 40px 0 78px;
     }
@@ -107,12 +122,21 @@
         margin-bottom: 12px;
         font-size: 14px;
         color: $main-blue;
+        cursor: pointer;
+        user-select: none;
     }
 
     .arrow {
         position: relative;
         margin-right: 11px;
         transform: rotate(180deg);
+    }
+
+    .aside {
+        position: absolute;
+        top: 140px;
+        right: 37px;
+        width: 264px;
     }
 
     .numbers {
