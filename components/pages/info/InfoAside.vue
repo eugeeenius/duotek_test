@@ -9,7 +9,7 @@
                 <span>Сайт:</span>
 
                 <a :href="info.url"
-                   target="_blank">{{ info.url }}</a>
+                   target="_blank">{{ formattedUrl }}</a>
             </div>
 
             <div v-if="info.contact_email"
@@ -24,7 +24,7 @@
                  :class="$style.item">
                 <span>Телефон:</span>
 
-                <a :href="`tel: ${info.contact_phone}`">{{ info.contact_phone }}</a>
+                <a :href="`tel: ${info.contact_phone}`">{{ formattedPhone }}</a>
             </div>
 
             <div v-if="info.contact_telegram"
@@ -74,6 +74,21 @@
                 const country = this.info.country?.title ? this.info.country.title + ', ' : '';
                 const city = this.info.city?.title ?? '';
                 return country + city;
+            },
+
+            formattedUrl() {
+                return this.info.url.replace(/https?:\/\//, '');
+            },
+
+            formattedPhone() {
+                const phone = this.info.contact_phone;
+                if (!phone) {
+                    return '';
+                }
+                const country = phone.substring(0, 1);
+                const city = phone.substring(1, 4);
+                const rest = [phone.substring(4, 7), phone.substring(7, 9), phone.substring(9, 11)].join('-');
+                return `+${country} (${city}) ${rest}`;
             },
         },
     };

@@ -28,6 +28,10 @@ export default {
         '~/assets/scss/main.scss'
     ],
 
+    pageTransition: {
+        name: 'page',
+        mode: 'out-in',
+    },
 
     router: {
         linkActiveClass: 'active-link',
@@ -42,8 +46,4 @@ export default {
         '@nuxtjs/axios',
         '@nuxtjs/style-resources',
     ],
-
-    axios: {},
-
-    build: {},
 }
