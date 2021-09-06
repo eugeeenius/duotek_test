@@ -35,12 +35,11 @@
 <style lang="scss" module>
     .UiTagList {
         display: flex;
+        flex-wrap: wrap;
+        margin: -2px;
     }
 
     .tag {
-
-        &:not(:first-child) {
-            margin-left: 4px;
-        }
+        padding: 2px;
     }
 </style>

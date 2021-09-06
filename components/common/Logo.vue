@@ -45,9 +45,10 @@
     .Logo {
         path {
             fill: #030953;
+            transition: fill $header-transition;
 
             &:last-child {
-                fill: white;
+                fill: #fff;
             }
         }
 

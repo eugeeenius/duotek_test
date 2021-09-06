@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header/>
+        <Header :inverse="isDark"/>
 
         <main class="container"
               :class="$style.main">
@@ -12,12 +12,20 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex';
+
     // Components
     import Header from '../components/common/Header'
     import Footer from '../components/common/Footer';
 
     export default {
-        components: {Footer, Header}
+        components: {Footer, Header},
+
+        computed: {
+            ...mapState({
+                isDark: state => state.darkTheme,
+            }),
+        },
     }
 </script>
 

@@ -75,9 +75,24 @@
     .Header {
         height: 96px;
         border-bottom: 1px solid #f2f2f2;
+        transition: background-color $header-transition;
 
         &._inverse {
+            background-color: $main-blue;
             border-bottom: none;
+
+            .login,
+            .link {
+                color: #fff;
+
+                &:hover {
+                    opacity: .7;
+                }
+            }
+
+            :global(.active-link) {
+                opacity: .7;
+            }
         }
     }
 
@@ -96,18 +111,16 @@
         padding: 5px 20px;
     }
 
-    .link,
-    .login {
+    .login,
+    .link {
+        transition: opacity $color-transition, color $header-transition;
 
         &:hover {
-            opacity: 0.3;
+            opacity: .3;
         }
     }
 
-    :global {
-
-        .active-link {
-            opacity: 0.3;
-        }
+    :global(.active-link) {
+        opacity: .3;
     }
 </style>

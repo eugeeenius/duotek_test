@@ -30,7 +30,7 @@ export default {
 
 
     router: {
-        linkExactActiveClass: 'active-link',
+        linkActiveClass: 'active-link',
     },
 
     plugins: [

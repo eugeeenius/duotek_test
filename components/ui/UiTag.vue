@@ -1,7 +1,7 @@
 <template>
-    <li :class="[$style.UiTag, {[$style._inverse]: inverse}]"
-         v-html="title"
-    ></li>
+    <li :class="[$style.UiTag, {[$style._inverse]: inverse}]">
+        <span v-html="title"></span>
+    </li>
 </template>
 
 <script>
@@ -25,15 +25,20 @@
 
 <style lang="scss" module>
     .UiTag {
-        padding: 5px 22px;
-        line-height: 20px;
-        border-radius: 200px;
-        background-color: $gray-bg;
-        color: $black;
-        transition: background-color $color-transition-slow;
 
         &._inverse {
             background-color: #fff;
+        }
+
+        span {
+            display: inline-block;
+            padding: 5px 22px;
+            border-radius: 200px;
+            background-color: $gray-bg;
+            font-size: 14px;
+            line-height: 20px;
+            color: $black;
+            transition: background-color $color-transition-slow;
         }
     }
 </style>

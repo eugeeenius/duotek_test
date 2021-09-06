@@ -27,7 +27,7 @@
                     v-for="company in companies"
                     :key="company.title + company.created_at"
                     :data="company"
-                    @click.native="$router.push('/company/' + company.id)"
+                    @click.native="$router.push('/company/info?id=' + company.id)"
                 />
             </div>
 
@@ -225,7 +225,7 @@
 <style lang="scss" module>
     .CompaniesPage {
         position: relative;
-        min-height: calc(100vh - 95px);
+        min-height: calc(100vh - 96px);
         padding: 75px 0 44px;
     }
 
@@ -261,7 +261,6 @@
     }
 
     .list {
-        //opacity: 1;
         transform: translateY(0);
         transition: opacity .4s, transform .3s;
     }
@@ -270,7 +269,6 @@
         display: flex;
         justify-content: center;
         font-size: 20px;
-        //opacity: 1;
         transition: opacity .4s;
     }
 
