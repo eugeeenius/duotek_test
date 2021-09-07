@@ -43,6 +43,11 @@
 
 <style lang="scss" module>
     .Logo {
+
+        @include mobile {
+            width: 100px;
+        }
+
         path {
             fill: #030953;
             transition: fill $header-transition;

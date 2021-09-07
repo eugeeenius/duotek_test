@@ -77,13 +77,15 @@
 
 <script>
     // Components
-
     import IconFacebook from './icons/social/IconFacebook';
     import IconVk from './icons/social/IconVk';
     import IconYoutube from './icons/social/IconYoutube';
+
     export default {
         name: 'Footer',
+
         components: {IconYoutube, IconVk, IconFacebook},
+
         data() {
             return {
                 tenders: [
@@ -190,6 +192,10 @@
     .Footer {
         padding: 80px 136px 88px;
         border-top: 1px solid $gray-l;
+
+        @include mobile {
+            display: none;
+        }
     }
 
     .title {

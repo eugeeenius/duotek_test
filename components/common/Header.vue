@@ -1,6 +1,5 @@
 <template>
-    <header id="header"
-            :class="[$style.Header, {[$style._inverse]: inverse}]">
+    <header :class="[$style.Header, {[$style._inverse]: inverse}]">
         <div class="container"
              :class="$style.content">
             <a href="/">
@@ -19,9 +18,11 @@
                 </nuxt-link>
             </nav>
 
-            <div class="link"
-                 :class="$style.login">Вход и регистрация
-            </div>
+            <a href="#"
+               class="link"
+               :class="$style.login">Вход и регистрация</a>
+
+            <div :class="$style.burger"></div>
         </div>
     </header>
 </template>
@@ -77,6 +78,10 @@
         border-bottom: 1px solid #f2f2f2;
         transition: background-color $header-transition;
 
+        @include mobile {
+            height: 54px;
+        }
+
         &._inverse {
             background-color: $main-blue;
             border-bottom: none;
@@ -105,6 +110,10 @@
 
     .nav {
         display: flex;
+
+        @include mobile {
+            display: none;
+        }
     }
 
     .link {
@@ -117,6 +126,45 @@
 
         &:hover {
             opacity: .3;
+        }
+    }
+
+    .login {
+
+        @include mobile {
+            display: none;
+        }
+
+        &._mob {
+            display: none;
+
+            @include mobile {
+                display: inline-block;
+            }
+        }
+    }
+
+    .burger {
+        position: relative;
+        width: 26px;
+        height: 2px;
+        background-color: $main-blue;
+
+        &:before,
+        &:after {
+            content: "";
+            position: absolute;
+            width: 26px;
+            height: 2px;
+            background-color: $main-blue;
+        }
+
+        &:before {
+            transform: translate3d(0, -320%, 0);
+        }
+
+        &:after {
+            transform: translate3d(0, 320%, 0);
         }
     }
 

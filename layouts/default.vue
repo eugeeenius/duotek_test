@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :class="$style.layout">
         <Header :inverse="isDark"/>
 
         <main class="container"
@@ -30,6 +30,10 @@
 </script>
 
 <style lang="scss" module>
+    .layout {
+        position: relative;
+    }
+
     .main {
         background-color: #fff;
     }
