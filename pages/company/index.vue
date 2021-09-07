@@ -172,6 +172,7 @@
             },
 
             onFilterChange(val) {
+                this.values.page = 1;
                 this.values = {...this.values, ...val};
                 this.changeQuery();
             },

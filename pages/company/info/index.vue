@@ -1,7 +1,7 @@
 <template>
     <section :class="$style.InfoPage">
         <div :class="$style.backlink"
-             @click="$router.push('/company')">
+             @click="$router.back()">
             <div :class="$style.arrow">
                 <IconArrow />
             </div>
@@ -70,10 +70,6 @@
             try {
                 const {id} = query;
 
-                if (!id) {
-                    redirect('/company');
-                }
-
                 const infoRes = await $axios.$get($api.companies.info, {
                     params: {
                         id: id,
@@ -87,6 +83,7 @@
                 };
             } catch(e) {
                 console.warn('[InfoPage/asyncData]: ', e);
+                redirect('/company');
             }
         },
 

@@ -5,8 +5,6 @@
 </template>
 
 <script>
-    // Components
-
     export default {
         name: 'UiTag',
 
@@ -27,12 +25,17 @@
     .UiTag {
 
         &._inverse {
-            background-color: #fff;
+
+            span {
+                background-color: #fff;
+            }
         }
 
         span {
-            display: inline-block;
-            padding: 5px 22px;
+            display: inline-flex;
+            align-items: center;
+            height: 32px;
+            padding: 0 22px;
             border-radius: 200px;
             background-color: $gray-bg;
             font-size: 14px;
