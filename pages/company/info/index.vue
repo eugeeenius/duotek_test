@@ -8,7 +8,7 @@
             Компании
         </div>
 
-        <aside :class="$style.aside">
+        <aside :class="$style.contacts">
             <InfoAside :info="company" />
         </aside>
 
@@ -44,6 +44,10 @@
 
                 <UiTagList :tags="company.industries" />
             </div>
+        </div>
+
+        <div :class="[$style.contacts, $style._mob]">
+            <InfoAside :info="company" />
         </div>
     </section>
 </template>
@@ -111,6 +115,10 @@
         position: relative;
         min-height: calc(100vh - 96px);
         padding: 40px 0 78px;
+
+        @include mobile {
+            padding: 20px 0 60px;
+        }
     }
 
     .backlink {
@@ -129,11 +137,26 @@
         transform: rotate(180deg);
     }
 
-    .aside {
+    .contacts {
         position: absolute;
         top: 140px;
         right: 37px;
         width: 264px;
+
+        @include mobile {
+            display: none;
+        }
+
+        &._mob {
+            display: none;
+            position: initial;
+            width: 100%;
+            margin-top: 40px;
+
+            @include mobile {
+                display: block;
+            }
+        }
     }
 
     .numbers {
@@ -166,6 +189,10 @@
         font-size: 18px;
         line-height: 25.2px;
         color: $black;
+
+        @include mobile {
+            max-width: 90%;
+        }
     }
 
     .fullDescr {
@@ -173,11 +200,19 @@
         margin-top: 24px;
         line-height: 21px;
         color: $black;
+
+        @include mobile {
+            max-width: 90%;
+        }
     }
 
     .features {
         max-width: 54%;
         margin-top: 40px;
+
+        @include mobile {
+            max-width: initial;
+        }
 
         h4 {
             font-size: 18px;

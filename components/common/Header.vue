@@ -25,7 +25,7 @@
                class="link"
                :class="$style.login">Вход и регистрация</a>
 
-            <div :class="$style.burger"
+            <div :class="[$style.burger, {[$style._inverse]: inverse}]"
                  @click="toggleBurger"></div>
         </div>
     </header>
@@ -162,6 +162,15 @@
 
         &:after {
             transform: translate3d(0, 320%, 0);
+        }
+
+        &._inverse {
+            background-color: #fff;
+
+            &:before,
+            &:after {
+                background-color: #fff;
+            }
         }
     }
 

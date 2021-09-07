@@ -107,12 +107,28 @@
 
     .contacts {
         margin-top: 16px;
+
+        @include mobile {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: initial;
+        }
     }
 
     .item {
+        margin-top: 20px;
 
-        &:not(:first-child) {
-            margin-top: 20px;
+        @include mobile {
+            width: 50%;
+            margin-top: 26px;
+        }
+
+        &:first-child {
+            margin-top: 0;
+
+            @include mobile {
+                margin-top: 26px;
+            }
         }
 
         a {
