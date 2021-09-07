@@ -87,7 +87,6 @@
 
 <style lang="scss" module>
     .CompaniesFilter {
-        width: 264px;
         padding: 18px 20px;
         border-radius: 4px;
         background-color: $gray-bg;

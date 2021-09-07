@@ -78,6 +78,17 @@
     .SearchBar {
         display: flex;
         height: 40px;
+
+        @include mobile {
+            width: 100%;
+        }
+    }
+
+    .wrap {
+
+        @include mobile {
+            width: 100%;
+        }
     }
 
     .input {
@@ -89,6 +100,10 @@
         border: 1px solid $gray-l;
         border-radius: 4px 0 0 4px;
         background-color: #fff;
+
+        @include mobile {
+            width: 100%;
+        }
 
         input {
             width: 100%;

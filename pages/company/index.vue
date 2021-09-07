@@ -7,13 +7,14 @@
             @on-search="handleSearch"
         />
 
-        <CompaniesFilter
-            v-if="specs.industry"
-            :class="$style.filter"
-            :values="values"
-            :specs="specs"
-            @change="onFilterChange"
-        />
+        <div :class="$style.filter">
+            <CompaniesFilter
+                v-if="specs.industry"
+                :values="values"
+                :specs="specs"
+                @change="onFilterChange"
+            />
+        </div>
 
         <section :class="[$style.results, {[$style._reloading]: isReloading}]">
             <Loader
@@ -228,18 +229,34 @@
         position: relative;
         min-height: calc(100vh - 96px);
         padding: 75px 0 44px;
+
+        @include mobile {
+            padding: 28px 0 40px;
+        }
     }
 
     .filter {
         position: absolute;
         top: 65px;
         right: 0;
+        width: 264px;
+
+        @include mobile {
+            position: initial;
+            width: 100%;
+            margin-top: 20px;
+        }
     }
 
     .results {
         position: relative;
         width: 792px;
         padding: 78px 0;
+
+        @include mobile {
+            width: 100%;
+            padding: 20px 0 44px;
+        }
 
         &._reloading {
 
@@ -258,7 +275,11 @@
         position: absolute;
         top: 78px;
         left: 50%;
-        transform: translate3d(0, -50%, 0);
+        transform: translate3d(-50%, 0, 0);
+
+        @include mobile {
+            top: 24px;
+        }
     }
 
     .list {
@@ -271,6 +292,11 @@
         justify-content: center;
         font-size: 20px;
         transition: opacity .4s;
+
+        @include mobile {
+            font-size: 18px;
+            text-align: center;
+        }
     }
 
     .pagination {

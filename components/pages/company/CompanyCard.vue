@@ -7,10 +7,12 @@
              :src="data.picture"
              :alt="data.ident">
 
-        <h4 :class="$style.title">{{ data.title }}</h4>
+        <div :class="$style.content">
+            <h4 :class="$style.title">{{ data.title }}</h4>
 
-        <div :class="$style.description">
-            <p>{{ data.description_short }}</p>
+            <div :class="$style.description">
+                <p>{{ data.description_short }}</p>
+            </div>
         </div>
 
         <UiTagList
@@ -51,12 +53,15 @@
     .CompanyCard {
         position: relative;
         width: 100%;
-        height: 200px;
         padding: 45px 75px 35px 193px;
         border-radius: 8px;
         background-color: #fff;
         transition: background-color $color-transition-slow;
         cursor: pointer;
+
+        @include mobile {
+            padding: 20px;
+        }
 
         &:hover {
             background-color: rgba(3, 9, 83, .03);
@@ -74,6 +79,18 @@
         top: 32px;
         left: 30px;
         max-width: 140px;
+
+        @include mobile {
+            position: initial;
+            max-width: 100%;
+        }
+    }
+
+    .content {
+
+        @include mobile {
+            padding: 10px;
+        }
     }
 
     .title {
