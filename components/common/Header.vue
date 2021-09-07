@@ -7,27 +7,33 @@
             </a>
 
             <nav :class="$style.nav">
-                <nuxt-link
-                    v-for="item in items"
-                    :key="item.name"
-                    class="link"
-                    :class="$style.link"
-                    :to="item.link"
-                >
-                    {{ item.name }}
-                </nuxt-link>
+                <ul>
+                    <nuxt-link
+                        v-for="item in items"
+                        :key="item.name"
+                        tag="li"
+                        class="link"
+                        :class="$style.link"
+                        :to="item.link"
+                    >
+                        {{ item.name }}
+                    </nuxt-link>
+                </ul>
             </nav>
 
             <a href="#"
                class="link"
                :class="$style.login">Вход и регистрация</a>
 
-            <div :class="$style.burger"></div>
+            <div :class="$style.burger"
+                 @click="toggleBurger"></div>
         </div>
     </header>
 </template>
 
 <script>
+    import {mapActions} from 'vuex';
+
     // Components
     import Logo from './Logo'
 
@@ -41,33 +47,16 @@
                 type: Boolean,
                 default: false,
             },
+            items: {
+                type: Array,
+                default: () => [],
+            },
         },
 
-        data() {
-            return {
-                items: [
-                    {
-                        name: 'Тендеры',
-                        link: '/empty/1',
-                    },
-                    {
-                        name: 'Компании',
-                        link: '/company',
-                    },
-                    {
-                        name: 'Продукты',
-                        link: '/empty/2',
-                    },
-                    {
-                        name: 'Кейсы',
-                        link: '/empty/3',
-                    },
-                    {
-                        name: 'Блог',
-                        link: '/empty/4',
-                    },
-                ],
-            }
+        methods: {
+            ...mapActions({
+                toggleBurger: 'toggleBurger',
+            }),
         },
     }
 </script>
@@ -109,7 +98,10 @@
     }
 
     .nav {
-        display: flex;
+
+        ul {
+            display: flex;
+        }
 
         @include mobile {
             display: none;
@@ -146,9 +138,14 @@
 
     .burger {
         position: relative;
+        display: none;
         width: 26px;
         height: 2px;
         background-color: $main-blue;
+
+        @include mobile {
+            display: initial;
+        }
 
         &:before,
         &:after {
