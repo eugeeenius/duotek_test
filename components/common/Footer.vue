@@ -194,7 +194,15 @@
         border-top: 1px solid $gray-l;
 
         @include mobile {
-            display: none;
+            padding: 0 10px 20px;
+        }
+    }
+
+    .column {
+
+        @include mobile {
+            width: 50%;
+            margin-top: 30px;
         }
     }
 
@@ -205,6 +213,11 @@
     .list {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr .96fr;
+
+        @include mobile {
+            display: flex;
+            flex-wrap: wrap;
+        }
     }
 
     .btn {
@@ -229,12 +242,21 @@
         transition: opacity $color-transition;
         cursor: pointer;
 
+        @include mobile {
+            margin-top: 8px;
+            font-size: 12px;
+        }
+
         &:hover {
             opacity: .7;
         }
 
         &._indent {
             margin-top: 32px;
+
+            @include mobile {
+                margin-top: 20px;
+            }
         }
     }
 
@@ -243,6 +265,10 @@
         justify-content: space-between;
         align-items: center;
         margin-top: 18px;
+
+        @include mobile {
+            display: block;
+        }
     }
 
     .icon + .icon {
@@ -252,6 +278,10 @@
     .about {
         font-size: 12px;
         color: $gray;
+
+        @include mobile {
+            margin-top: 18px;
+        }
 
         span + span {
             margin-left: 30px;
