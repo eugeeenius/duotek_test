@@ -156,8 +156,10 @@
             },
         },
 
-        watchQuery(query) {
-            this.fetchCompanies(query);
+        watch: {
+            queryObj() {
+                this.fetchCompanies();
+            },
         },
 
         methods: {
@@ -173,7 +175,7 @@
                 });
             },
 
-            async fetchCompanies(query) {
+            async fetchCompanies() {
                 this.isReloading = true;
                 window.scrollTo(0, 0);
 
@@ -181,7 +183,7 @@
                     const res = await this.$axios.$get(this.$api.companies.list, {
                         params: {
                             per_page: 10,
-                            ...query,
+                            ...this.queryObj,
                         }
                     });
 
