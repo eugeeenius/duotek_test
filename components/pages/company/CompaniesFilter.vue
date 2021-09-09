@@ -65,12 +65,6 @@
             };
         },
 
-        computed: {
-            name() {
-                return this.data;
-            },
-        },
-
         methods: {
             titleFormatter(title) {
                 if (title.length < this.collapseLength) {

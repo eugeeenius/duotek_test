@@ -2,19 +2,11 @@
     <section :class="$style.CompaniesPage">
         <h1 class="title">Каталог компаний</h1>
 
-        <SearchBar
-            :value="values.search"
-            @on-search="handleSearch"
+        <CompaniesHead
+            :specs="specs"
+            :values="values"
+            @change="onValueChange"
         />
-
-        <div :class="$style.filter">
-            <CompaniesFilter
-                v-if="specs.industry"
-                :values="values"
-                :specs="specs"
-                @change="onFilterChange"
-            />
-        </div>
 
         <section :class="[$style.results, {[$style._reloading]: isReloading}]">
             <Loader
@@ -42,7 +34,7 @@
                 v-for="index in pageInfo.meta.last_page"
                 :key="index"
                 :class="[$style.paginationItem, {[$style._active]: pageInfo.meta.current_page === index}]"
-                @click="onPaginationClick(index)"
+                @click="onValueChange({page: index})"
             >
                 {{ index }}
             </li>
@@ -56,11 +48,13 @@
     import CompaniesFilter from '../../components/pages/company/CompaniesFilter';
     import CompanyCard from '../../components/pages/company/CompanyCard';
     import Loader from '../../components/common/Loader';
+    import CompaniesHead from '../../components/pages/company/CompaniesHead';
 
     export default {
         name: 'CompaniesPage',
 
         components: {
+            CompaniesHead,
             Loader,
             CompanyCard,
             CompaniesFilter,
@@ -162,28 +156,24 @@
             },
         },
 
-        created() {
-            this.changeQuery();
+        watchQuery(query) {
+            this.fetchCompanies(query);
         },
 
         methods: {
-            handleSearch(val) {
-                this.values.search = val;
+            onValueChange(val) {
+                this.values = {...this.value, ...val};
                 this.changeQuery();
             },
 
-            onFilterChange(val) {
-                this.values.page = 1;
-                this.values = {...this.values, ...val};
-                this.changeQuery();
+            changeQuery() {
+                this.$router.push({
+                    path: '/company',
+                    query: this.queryObj,
+                });
             },
 
-            onPaginationClick(val) {
-                this.values.page = val;
-                this.changeQuery();
-            },
-
-            async fetchCompanies() {
+            async fetchCompanies(query) {
                 this.isReloading = true;
                 window.scrollTo(0, 0);
 
@@ -191,7 +181,7 @@
                     const res = await this.$axios.$get(this.$api.companies.list, {
                         params: {
                             per_page: 10,
-                            ...this.queryObj,
+                            ...query,
                         }
                     });
 
@@ -211,15 +201,6 @@
                     })
                 }, 400);
             },
-
-            changeQuery() {
-                this.$router.push({
-                    path: '/company',
-                    query: this.queryObj,
-                });
-
-                this.fetchCompanies();
-            },
         },
     }
 </script>
@@ -232,19 +213,6 @@
 
         @include mobile {
             padding: 28px 0 40px;
-        }
-    }
-
-    .filter {
-        position: absolute;
-        top: 65px;
-        right: 0;
-        width: 264px;
-
-        @include mobile {
-            position: initial;
-            width: 100%;
-            margin-top: 20px;
         }
     }
 
